@@ -1,7 +1,5 @@
 from rest_framework.permissions import BasePermission
 
-from projects.models import Project
-
 
 class TaskPermission(BasePermission):
     def has_permission(self, request, view):

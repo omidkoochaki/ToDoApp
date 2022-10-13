@@ -53,6 +53,6 @@ class UserDetailsSerializer(serializers.ModelSerializer):
         model = User
         fields = ["last_login", "first_name", "last_name", "email", "projects", "developer_in_projects",
                   "tasks", "date_joined", "updated_at"]
-        # developer_in_projects, developer_in_tasks
+
 
 

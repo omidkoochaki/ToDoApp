@@ -1,13 +1,9 @@
 from django.db import models
 from datetime import datetime
 
-import uuid
-
 
 class BaseManager(models.Manager):
-
     def get_queryset(self):
-
         return super().get_queryset().filter(is_deleted=False)
 
 
