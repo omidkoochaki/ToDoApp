@@ -15,3 +15,7 @@ Users first sign up as `developers`. Admin can make them `manager`.
 use the below docker-compose command to deploy the project:
 `docker-compose up -d --build`
 
+
+### Documentation URL:
+Docs URL:
+`http://localhost:8000/`
