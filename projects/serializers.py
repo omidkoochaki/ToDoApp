@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from projects.models import Project, Task
+from users.models import User
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -17,7 +18,16 @@ class ProjectSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
+class ProjectMemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["email"]
+
+
 class ProjectDetailSerializer(serializers.ModelSerializer):
+    manager = ProjectMemberSerializer(read_only=True)
+    developers = ProjectMemberSerializer(many=True)
+
     class Meta:
         model = Project
         fields = ["id", "title", "budget", "description", "manager", "tasks", "developers"]
@@ -38,7 +48,7 @@ class TaskSerializer(serializers.ModelSerializer):
         user = request.user
         developers = attrs.get('developers')
         if user != project.manager:
-            print('is developer ' * 30)
+
             if user in project_developers and developers == [user]:
                 pass
             else:
@@ -49,4 +59,3 @@ class TaskSerializer(serializers.ModelSerializer):
             project.developers.set(available_developers)
 
         return super().validate(attrs)
-

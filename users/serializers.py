@@ -2,6 +2,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from projects.models import Project
 from .models import User
 
 
@@ -48,11 +49,17 @@ class UserGeneralSerializer(serializers.ModelSerializer):
         fields = ["first_name", "last_name", "email"]
 
 
+class UserProjectsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ["title", "description"]
+
+
 class UserDetailsSerializer(serializers.ModelSerializer):
+    projects = UserProjectsSerializer(many=True, read_only=True)
+    developer_in_projects = UserProjectsSerializer(many=True, read_only=True)
+
     class Meta:
         model = User
         fields = ["last_login", "first_name", "last_name", "email", "projects", "developer_in_projects",
                   "tasks", "date_joined", "updated_at"]
-
-
-

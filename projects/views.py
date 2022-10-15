@@ -14,12 +14,7 @@ class ProjectsViewSet(ModelViewSet):
         ProjectPermission,
     ]
 
-    def get_queryset(self):
-        if self.action == 'create':
-            return Project.objects.all()
-        else:
-            query = Q(manager=self.request.user) | Q(developers__id=self.request.user.id)
-            return Project.objects.filter(query)
+    queryset = Project.objects.select_related().all()
 
     def get_serializer_class(self):
         if self.action == 'create':

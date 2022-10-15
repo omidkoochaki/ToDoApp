@@ -15,8 +15,5 @@ class ProjectPermission(BasePermission):
         if view.action == 'create':
             return request.user.is_manager
         else:
-            project = request.data.get('project')
-            project_developers = project.developers.all()
-
-            return (project.manager == request.user) or (request.user in project_developers)
+            return True
 
